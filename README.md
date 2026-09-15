@@ -11,9 +11,9 @@ React Native mobile app for logging workouts and tracking calories, including AI
 React Native, TypeScript
 
 ## Setup
-\`\`\`bash
+```bash
 git clone https://github.com/balloon083/workout-app-frontend
 cd workout-app-frontend
 npm install
 npm start
-\`\`\`
+```
