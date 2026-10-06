@@ -1,5 +1,5 @@
-import { MealEntry, Workout, getMeals, getWorkouts } from '@/api/client';
-import MonthCalendar from '@/components/MonthCalendar';
+import { MealEntry, Workout, getMeals, getWorkouts } from '@/api';
+import MonthCalendar from '@/components/profile/MonthCalendar';
 import { colors } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
 import { dateKeyFromDate, formatDuration, timeAgo, toDateKey } from '@/utils/time';

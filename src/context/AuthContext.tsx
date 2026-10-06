@@ -1,4 +1,5 @@
-import { AuthUser } from '@/api/client';
+import { AuthUser } from '@/api';
+import { AUTH_TOKEN_KEY } from '@/api/client';
 import * as SecureStore from 'expo-secure-store';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
@@ -9,6 +10,8 @@ interface AuthContextValue {
   signOut: () => Promise<void>;
 }
 
+const AUTH_USER_KEY = 'authUser';
+
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -18,8 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // On app startup, check if a token was already saved from a previous session.
   useEffect(() => {
     async function loadStoredAuth() {
-      const token = await SecureStore.getItemAsync('authToken');
-      const savedUser = await SecureStore.getItemAsync('authUser');
+      const token = await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+      const savedUser = await SecureStore.getItemAsync(AUTH_USER_KEY);
       if (token && savedUser) {
         setUser(JSON.parse(savedUser));
       }
@@ -29,14 +32,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   async function signIn(userData: AuthUser, token: string) {
-    await SecureStore.setItemAsync('authToken', token);
-    await SecureStore.setItemAsync('authUser', JSON.stringify(userData));
+    await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
+    await SecureStore.setItemAsync(AUTH_USER_KEY, JSON.stringify(userData));
     setUser(userData);
   }
 
   async function signOut() {
-    await SecureStore.deleteItemAsync('authToken');
-    await SecureStore.deleteItemAsync('authUser');
+    await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
+    await SecureStore.deleteItemAsync(AUTH_USER_KEY);
     setUser(null);
   }
 

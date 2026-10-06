@@ -1,4 +1,4 @@
-import { FoodResult, searchFoods } from '@/api/client';
+import { FoodResult, searchFoods } from '@/api';
 import { colors } from '@/constants/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React, { useEffect, useRef, useState } from 'react';

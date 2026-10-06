@@ -1,6 +1,7 @@
-import { login } from '@/api/client';
+import { login } from '@/api';
 import { colors } from '@/constants/theme';
 import { useAuth } from '@/context/AuthContext';
+import { getErrorMessage } from '@/utils/errors';
 import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -22,9 +23,8 @@ export default function LoginScreen() {
       const data = await login(email, password);
       await signIn(data.user, data.token);
       router.replace('/(tabs)');
-    } catch (err: any) {
-      const message = err.response?.data?.error || 'Something went wrong logging in.';
-      Alert.alert('Login failed', message);
+    } catch (err) {
+      Alert.alert('Login failed', getErrorMessage(err, 'Something went wrong logging in.'));
     } finally {
       setLoading(false);
     }
